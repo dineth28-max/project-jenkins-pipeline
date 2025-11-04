@@ -1,17 +1,20 @@
-# Use the latest official Node.js image as the base image
+# Use a lightweight Node.js base image for better performance
 FROM node:latest
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy all files from the local "nodeapp" folder into the container's root directory (/)
+# Copy package.json and package-lock.json first (for better caching)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy the rest of your application files
 COPY . .
 
-# Install all required dependencies listed in package.json
-RUN npm install
-
-# Expose port 4000 so it can be accessed outside the container
+# Expose the application port
 EXPOSE 4000
 
-# Start the Node.js application using npm
+# Define the command to run your app
 CMD ["npm", "start"]
