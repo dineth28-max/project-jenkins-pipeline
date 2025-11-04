@@ -5,7 +5,7 @@ FROM node:latest
 WORKDIR /usr/src/app
 
 # Copy all files from the local "nodeapp" folder into the container's root directory (/)
-COPY nodeapp/* /
+COPY ..
 
 # Install all required dependencies listed in package.json
 RUN npm install
